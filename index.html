@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta information -->
+  <meta charset="UTF-8" />
+  <title>FarmFresh - Home</title>
+
+  <!-- External CSS file -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ================= NAVIGATION BAR ================= -->
+  <nav>
+    <!-- Logo -->
+    <a class="logo" href="index.html">FarmFresh</a>
+
+    <!-- Navigation links -->
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+
+      <!-- Cart with dynamic item count -->
+      <li>
+        <a href="cart.html">
+          Cart
+          <span class="nav-cart-count" id="cart-count">0</span>
+        </a>
+      </li>
+
+      <li><a href="checkout.html">Checkout</a></li>
+    </ul>
+  </nav>
+
+  <!-- ================= OFFER BANNER ================= -->
+  <div class="banner">
+    Free delivery on orders above Rs. 200! Use code <strong>FRESH10</strong> for 10% off
+  </div>
+
+  <div class="container">
+
+    <!-- ================= HERO SECTION ================= -->
+    <div class="hero">
+      <h1>FarmFresh - Organic Grocery</h1>
+
+      <!-- Website description -->
+      <p>
+        Order fresh organic vegetables, fruits, dairy and meat. Delivered at your chosen time.
+      </p>
+
+      <!-- ================= SEARCH BAR ================= -->
+      <div class="search-bar">
+
+        <!-- Input field -->
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search for vegetables, fruits, dairy or meat..."
+        />
+
+        <!-- Search button -->
+        <button onclick="searchProducts()">Search</button>
+      </div>
+
+      <!-- Shop Now button -->
+      <a href="products.html">
+        <button class="btn-orange">Shop Now</button>
+      </a>
+    </div>
+
+    <!-- ================= FEATURES SECTION ================= -->
+    <h2>Why FarmFresh?</h2>
+
+    <!-- Feature 1 -->
+    <div class="feature-box">
+      <div class="icon">🌱</div>
+      <h3>100% Organic</h3>
+      <p>Chemical-free, certified organic products straight from the farm.</p>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="feature-box">
+      <div class="icon">⏰</div>
+      <h3>Choose Delivery Slot</h3>
+      <p>Pick morning, afternoon or evening delivery at your convenience.</p>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="feature-box">
+      <div class="icon">💳</div>
+      <h3>Easy Payment</h3>
+      <p>Cash on Delivery, UPI or Net Banking — your choice.</p>
+    </div>
+
+    <br /><br />
+
+    <!-- ================= TESTIMONIALS ================= -->
+    <h2>What Our Customers Say</h2>
+
+    <!-- Customer 1 -->
+    <div class="feature-box">
+      <div class="icon">👨</div>
+      <h3>Rahul Sharma</h3>
+      <p>"Very fresh vegetables! Delivered on time. Highly recommended."</p>
+    </div>
+
+    <!-- Customer 2 -->
+    <div class="feature-box">
+      <div class="icon">👩</div>
+      <h3>Priya Singh</h3>
+      <p>"Best organic store online. Quality is amazing and prices are fair."</p>
+    </div>
+
+    <!-- Customer 3 -->
+    <div class="feature-box">
+      <div class="icon">👨</div>
+      <h3>Amit Verma</h3>
+      <p>"Good service and packaging. Will order again for sure!"</p>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="footer-inner">
+
+      <!-- About section -->
+      <div class="footer-col">
+        <h4>FarmFresh</h4>
+        <p>Fresh organic grocery delivered to your doorstep.</p>
+      </div>
+
+      <!-- Quick links -->
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+      </div>
+
+      <!-- Contact details -->
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>farmfresh@gmail.com</p>
+        <p>+91 98765 43210</p>
+        <p>VIT Vellore, Tamil Nadu</p>
+      </div>
+    </div>
+
+    <!-- Bottom copyright -->
+    <div class="footer-bottom">
+      &copy; 2026 FarmFresh Shashwat - 24BCE2409
+    </div>
+  </footer>
+
+  <!-- External JS file -->
+  <script src="script.js"></script>
+
+  <!-- ================= INTERNAL JAVASCRIPT ================= -->
+  <script>
+
+    // Update navbar cart count using function from script.js
+    document.getElementById("cart-count").textContent = getCartCount();
+
+    // Function to handle product search
+    function searchProducts() {
+      var query = document.getElementById("search-input").value.trim();
+
+      // If input is not empty, redirect to products page with query
+      if (query) {
+        window.location.href = "products.html?search=" + encodeURIComponent(query);
+      }
+    }
+
+    // Allow pressing "Enter" to trigger search
+    document
+      .getElementById("search-input")
+      .addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          searchProducts();
+        }
+      });
+
+  </script>
+
+</body>
+</html>
