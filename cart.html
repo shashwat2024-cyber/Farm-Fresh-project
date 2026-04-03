@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cart - FarmFresh</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <a class="logo" href="index.html">FarmFresh</a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li>
+        <a href="cart.html">
+          Cart
+          <span class="nav-cart-count" id="cart-count">0</span>
+        </a>
+      </li>
+      <li><a href="checkout.html">Checkout</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Your Cart</h2>
+    <div id="cart-container"></div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>FarmFresh</h4>
+        <p>Fresh organic grocery delivered to your doorstep.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>farmfresh@gmail.com</p>
+        <p>+91 98765 43210</p>
+        <p>VIT Vellore, Tamil Nadu</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 FarmFresh Shashwat - 24BCE2409
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  
+  <script>
+    // Initialize the cart item count in the navigation bar
+    document.getElementById("cart-count").textContent = getCartCount();
+
+    /**
+     * Generates and renders the HTML for the shopping cart items.
+     * It handles empty states, calculates subtotals, and delivery charges.
+     */
+    function renderCart() {
+      var cart = getCart(); // Retrieve cart data from storage
+      var container = document.getElementById("cart-container");
+
+      // Check if the cart has any items; if not, show empty message
+      if (cart.length === 0) {
+        container.innerHTML =
+          '<p style="margin-bottom:16px;color:#888;">Your cart is empty.</p>' +
+          '<a href="products.html"><button class="btn-orange">Continue Shopping</button></a>';
+        return;
+      }
+
+      var total = 0;
+      var rows = "";
+
+      // Iterate through items to build table rows and calculate the total price
+      for (var i = 0; i < cart.length; i++) {
+        var item = cart[i];
+        var subtotal = item.price * item.qty;
+        total += subtotal;
+
+        rows +=
+          "<tr>" +
+          "<td>" + item.name + "</td>" +
+          "<td>Rs. " + item.price + "</td>" +
+          "<td>" + item.qty + "</td>" +
+          "<td>Rs. " + subtotal + "</td>" +
+          '<td><button class="btn-red" onclick="deleteItem(' + item.id + ')">Remove</button></td>' +
+          "</tr>";
+      }
+
+      // Delivery logic: Free over Rs. 200, otherwise flat Rs. 40
+      var delivery = total >= 200 ? 0 : 40;
+      var grandTotal = total + delivery;
+
+      // Construct the final HTML layout for the cart table and summary
+      container.innerHTML =
+        "<table>" +
+        "<thead>" +
+        "<tr>" +
+        "<th>Product</th>" +
+        "<th>Price</th>" +
+        "<th>Qty</th>" +
+        "<th>Subtotal</th>" +
+        "<th>Action</th>" +
+        "</tr>" +
+        "</thead>" +
+        "<tbody>" +
+        rows +
+        "</tbody>" +
+        "</table>" +
+        '<div class="cart-summary">' +
+        "<p>Items Total: <strong>Rs. " + total + "</strong></p>" +
+        "<p>Delivery Charge: <strong>" + (delivery === 0 ? "FREE" : "Rs. " + delivery) + "</strong></p>" +
+        '<p style="border-top:1px solid #a5d6a7;padding-top:8px;font-size:1.05rem;">Grand Total: <strong style="color:#e65100;">Rs. ' + grandTotal + "</strong></p>" +
+        (delivery === 0
+          ? ""
+          : '<p style="color:#888;font-size:0.82rem;">Add Rs. ' + (200 - total) + " more for free delivery!</p>") +
+        "</div>" +
+        '<div class="cart-actions">' +
+        '<a href="products.html"><button>Continue Shopping</button></a>' +
+        '<button class="btn-red" onclick="clearCartAndRender()">Clear Cart</button>' +
+        '<a href="checkout.html"><button class="btn-blue">Proceed to Checkout</button></a>' +
+        "</div>";
+    }
+
+    /**
+     * Removes a single item by ID and refreshes the UI
+     */
+    function deleteItem(id) {
+      removeItem(id); // Global function call
+      document.getElementById("cart-count").textContent = getCartCount();
+      renderCart();
+    }
+
+    /**
+     * Clears all items from the cart and resets the display
+     */
+    function clearCartAndRender() {
+      clearCart(); // Global function call
+      document.getElementById("cart-count").textContent = 0;
+      renderCart();
+    }
+
+    // Run the render function on initial page load
+    renderCart();
+  </script>
+</body>
+</html>
